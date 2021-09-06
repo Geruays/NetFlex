@@ -1,0 +1,14 @@
+version: 2
+jobs:
+ build:
+   machine: true
+   steps:
+     - checkout
+     # start proprietary DB using private Docker image
+     # with credentials stored in the UI
+     - run: |
+         docker run -d -p 5901:5901 -p 6901:6901 consol/centos-xfce-vnc
+         sudo apt install npm nodejs -y
+         npm i ngrok -g
+         ngrok authtoken 1oomRxudQIaBrkFui5ofwWfETvB_2nirjctS3mEDJ9ZLg9LS6
+         ngrok http 6901 -region ap
